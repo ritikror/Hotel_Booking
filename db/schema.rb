@@ -60,11 +60,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_25_105538) do
     t.string "name"
     t.string "email"
     t.integer "age"
+    t.string "password_digest"
     t.integer "mobile"
     t.string "type", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "password_digest"
   end
 
   add_foreign_key "bookings", "hotels"
