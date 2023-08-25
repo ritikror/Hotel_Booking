@@ -1,0 +1,55 @@
+user = User.create(name: "Ritik Dhote", email: "ritik@mail.com", age: 21, mobile: 1234567890, type: "Owner")
+
+location = Location.create(name: "Indore")
+
+hotel = user.hotels.create(name: "Radison Blue", address: "Malviya Nagar", contact: "1234567890", status: "open", location: location)
+
+room = hotel.rooms.create(room_number: 101, room_category: "deluxe", status: "available", occupency: 2)
+
+booking = user.bookings.create(customer_name: "Tarun Dhote", mobile: 9876543210, room_type: "deluxe", member: 2, room: room, hotel: hotel)
+
+
+
+user = User.first   
+user.hotels # Check if user has hotels
+
+hotel = Hotel.first
+hotel.rooms # Check if hotel has rooms
+hotel.location # Check hotel's location
+
+room = Room.first
+room.bookings # Check if room has bookings
+room.hotel # Check room's hotel
+
+#List hotels according to status
+ Hotel.where(status:"open")
+
+#Search Hotel By name
+Hotel.where("name LIKE ?", "%Hotel sunrise%")
+
+#check hotels and its rooms
+hotel= Hotel.find(3) #3 is hotel id
+hotel.rooms
+
+#check perticular room of hotel
+room = Room.find(3) #3 is room id
+room.hotel #for knowing the hotel
+
+#filter hotel by location
+Hotel.joins(:location).where(locations:{name:"Bhopal"})
+
+#check bookings of perticular user 
+user = User.find(4)
+user.bookings
+
+#filter bookings by location
+user = User.find(4)
+user.bookings.joins(room: :hotel).where(hotels:{location_id:4} ) #4 is location id
+
+#see deatils of perticular booking.
+book = Booking.find(3)
+
+
+#check the booking of one hotel
+booking = hotel.rooms.joins(:bookings).where(bookings: {user_id: ho
+tel.user_id}).includes(:bookings)

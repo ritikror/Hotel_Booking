@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  customer_name: MyString
+  mobile: 1
+  room_type: MyString
+  member: 1
+  user: one
+  room: one
+
+two:
+  customer_name: MyString
+  mobile: 1
+  room_type: MyString
+  member: 1
+  user: two
+  room: two
