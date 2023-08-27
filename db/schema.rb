@@ -60,7 +60,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_25_105538) do
     t.string "name"
     t.string "email"
     t.integer "age"
-    t.string "password_digest"
+    t.string "password"
     t.integer "mobile"
     t.string "type", null: false
     t.datetime "created_at", null: false

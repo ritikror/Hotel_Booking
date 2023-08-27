@@ -1,6 +1,10 @@
 class LocationsController < ApplicationController
-    before_action :set_params, only: [:show, :update, :destroy]
-    def index
+	skip_before_action :authenticate_request
+	skip_before_action :check_customer
+	skip_before_action :check_owner
+	before_action :set_params, only: [:show]
+	
+	def index
 		locations = Location.all
 		render json: locations, status: :ok
 	end
@@ -11,37 +15,24 @@ class LocationsController < ApplicationController
 		end
 	end
 
-    def create
-        @location = Location.new(location_params)
-        if @location.save
-        
-          render json: @location
-        else
-          render json: {error: @location.errors.full_messages}
-        end
-      end
-  
-      def update
-        if @location.update(location_params)
-          render json: @location
-        else
-          render :update, status: :unprocessable_entity
-        end  
-      end
-  
-      def destroy
-        @location.destroy
-        render json:'User Deleted Succesfully..'
-      end
+	def create
+		location = Location.new(location_params)
+		if location.save
+		render json: { message:"Location Created", data: location }
+		else
+		render json: { errors: location.errors.full_messages }
+		end
+	end
 
 	private
+
+	def location_params
+		params.permit(:name)
+	end
+
 	def set_params
 		@location = Location.find(params[:id])
 	rescue
 		render json: { error: "ID not found"}
 	end
-
-    private def location_params
-      params.require(:location).permit(:name)
-    end
 end

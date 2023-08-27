@@ -1,4 +1,4 @@
-user = User.create(name: "Ritik Dhote", email: "ritik@mail.com", age: 21, mobile: 1234567890, type: "Owner")
+user = User.create(name: "Ritik Dhote", email: "ritik@mail.com",password:"Ritik@123", age: 21, mobile: 1234567890, type: "Owner")
 
 location = Location.create(name: "Indore")
 
