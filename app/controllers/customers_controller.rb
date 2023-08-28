@@ -4,22 +4,13 @@ class CustomersController < ApplicationController
     skip_before_action :check_owner
         
     def index
-        hotels =  if params[:status].present?
-                    open_hotel()
-                elsif params[:name].present?
-                    search_hotel_by_name()
-                else
-                    hotels= Hotel.all
-                end
-        if hotels.present?
-        render json: hotels, status: :ok
-        end
+        redirect_to "/hotels"
     end
 
     def create
         customer = Customer.new(customer_params)
-        if customer.save!
-            render json: customer, status: :created
+        if customer.save    
+            render json: { message:"Customer Created!!!", data: customer }
         else
             render json: customer.errors.full_messages, status: :unprocessable_entity
         end

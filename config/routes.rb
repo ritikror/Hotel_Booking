@@ -1,11 +1,12 @@
 Rails.application.routes.draw do
   resources :locations
+  resources :customers
   resources :owners
+  resources :bookings
   resources :users
   post '/user/login', to: 'users#login'
 
-  resource :customers
-  get '/customer/index', to: 'customers#index'
+ 
 
   resources :hotels
   get '/search_by_location', to: 'hotels#search_hotel_by_location'
@@ -16,8 +17,5 @@ Rails.application.routes.draw do
   get '/room/list', to: 'rooms#room_list_by_hotel_id'
 
   get '/open_hotel', to: 'customers#open_hotel'
-  
- 
-  resources :bookings
-   
+     
 end

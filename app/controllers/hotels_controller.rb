@@ -1,5 +1,6 @@
 class HotelsController < ApplicationController
 	skip_before_action :check_customer
+	skip_before_action :check_owner, only: :index
 	before_action :set_params, only: [:show, :destroy]
 
  	def index
