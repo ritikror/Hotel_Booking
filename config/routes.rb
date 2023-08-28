@@ -16,11 +16,8 @@ Rails.application.routes.draw do
   get '/room/list', to: 'rooms#room_list_by_hotel_id'
 
   get '/open_hotel', to: 'customers#open_hotel'
-  get '/cust/search_hotel_by_name', to: 'customers#search_hotel_by_name'
-  
   
  
   resources :bookings
-  get '/book/filter_bookings_by_location', to: 'bookings#filter_bookings_by_location'
    
 end

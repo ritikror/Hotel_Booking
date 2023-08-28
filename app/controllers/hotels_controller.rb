@@ -33,21 +33,31 @@ class HotelsController < ApplicationController
 			render json: { message: "Hotel Deleted !!!" }, status: :ok
 		end
 	end
+
+	def search_hotel_by_location
+		name = params[:name]
+		if name.blank?
+			return render json: "Location can't be blank"
+		end
+		hotels = Hotel.joins(:location).where('locations.name like ?', "%#{name}%")
+		render json: hotels
+  	end
+
+	def search_hotel_by_name
+		name = params[:name]
+		if name.blank?
+			return render json: "Hotel name can't be blank"
+		end
+		hotel = Hotel.where("name LIKE ?", "%#{name}%")
+		render json: hotel
+	end
 	
  	private
-
 		def hotel_params
 			params.permit(:name, :address, :contact, :status, :location_id)
 		end
 
 		def set_params
 			@hotel = @current_user.hotels.find(params[:id])
-		rescue ActiveRecord::RecordNotFound
-			render json: {message: "Id not found"}	
-		end
-
-		def search_hotel_by_location
-		  hotels = Hotel.joins(:location).where('locations.name like ?', "%#{params[:location]}%")
-		  # hotels = Hotel.includes([:location]).where('locations.name like ?', "%#{params[:location]}%")
 		end
 end

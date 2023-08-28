@@ -16,7 +16,6 @@ class BookingsController < ApplicationController
 	
 		  rooms.each do |room|
 			@booking = @current_user.bookings.new(booking_params)
-			# @booking.room_id = room.id
 			(member > 1) ? @booking.member = 2 : @booking.member = 1
 			member -= 2
 	
@@ -39,11 +38,6 @@ class BookingsController < ApplicationController
     render json: bookings, status: :ok
   end
 
-  def filter_bookings_by_location
-    bookings = ActiveRecord::Base.connection.execute("select rooms.room_number, bookings.member from bookings INNER JOIN users on users.id = bookings.user_id INNER JOIN rooms on rooms.id = bookings.room_id INNER JOIN hotels on hotels.id = rooms.hotel_id INNER JOIN locations on locations.id = hotels.location_id where users.id = #{@current_user.id} and locations.name like '%#{params[:name]}%'")
-    return render json: { message: 'booking not found' } unless bookings.present?
-    render json: bookings, status: :ok
-  end
 
   def show
     return render json: @booking, status: :ok if @booking.present?

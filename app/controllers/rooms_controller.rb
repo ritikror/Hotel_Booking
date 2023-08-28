@@ -4,7 +4,7 @@ class RoomsController < ApplicationController
   def create
     room = Room.new(room_params)
     if room.save
-      render json: room, status: :created
+      render json: { message:"Room added successfully!!", data: room }, status: :created
     else
       render json: { data: room.errors.full_messages }, status: :unprocessable_entity
     end
