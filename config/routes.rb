@@ -3,10 +3,13 @@ Rails.application.routes.draw do
   resources :customers
   resources :owners
   resources :bookings
-  resources :users
-  post '/user/login', to: 'users#login'
+  resource :users 
+  post 'user/login', to: 'users#login'
+  patch 'users', to: 'users#update'
+  put  'users', to: 'users#update'
+  delete 'users', to: 'users#destroy'
 
- 
+   
 
   resources :hotels
   get '/search_by_location', to: 'hotels#search_hotel_by_location'

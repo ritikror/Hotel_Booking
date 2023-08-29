@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::API
-    include JsonWebToken
+  include JsonWebToken
 	  
 	before_action :authenticate_request
 	before_action :check_owner
@@ -12,9 +12,10 @@ class ApplicationController < ActionController::API
 				header = header.split(" ").last if header
 				decoded = jwt_decode(header)
 				@current_user = User.find(decoded[:user_id])
-			rescue JWT::DecodeError => e
+			rescue JWT::DecodeError	=> e
 				render json: { error: 'Invalid token' }, status: :unprocessable_entity
 			end
+
 			rescue ActiveRecord::RecordNotFound
 				render json: "No record found.."
 		end
@@ -30,10 +31,6 @@ class ApplicationController < ActionController::API
 
 		def check_customer
 			return render json: { message: "You are not customer" } unless @current_user.type == 'Customer'
-		end
-
-		def search_hotel_by_name
-	    hotels = Hotel.where("name like ?", "%"+params[:name]+"%")
 		end
 
 		def render_404

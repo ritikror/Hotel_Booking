@@ -1,16 +1,10 @@
 class HotelsController < ApplicationController
 	skip_before_action :check_customer
-	skip_before_action :check_owner, only: :index
+	skip_before_action :check_owner, only: [:index, :search_hotel_by_location, :search_hotel_by_name ]
 	before_action :set_params, only: [:show, :destroy]
 
  	def index
-		hotels = if params[:location].present? 
-					search_hotel_by_location()
-				elsif params[:name].present?
-					search_hotel_by_name()
-				else
-					hotels = Hotel.all
-				end 
+		hotels = hotels = Hotel.all
 	  	render json: hotels 
  	end
 
@@ -21,8 +15,8 @@ class HotelsController < ApplicationController
 
 	def create
 		hotel = @current_user.hotels.new(hotel_params)
-	  if hotel.save
-      render json: hotel, status: :created
+		if hotel.save
+		render json: hotel, status: :created
     else
       render json: { error: hotel.errors.full_messages }, status: :unprocessable_entity
     end

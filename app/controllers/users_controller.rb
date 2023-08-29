@@ -3,10 +3,35 @@ class UsersController < ApplicationController
 	skip_before_action :check_owner
 	skip_before_action :check_customer
 
-  def index
-    users = User.all
-    render json: users
+  def show
+    render json: @current_user
   end
+
+  def create
+    user = User.new(user_params)
+    if user.save    
+        render json: { message:"User Created!!!", data: user }
+    else
+        render json: user.errors.full_messages, status: :unprocessable_entity
+    end
+  end
+
+  def update
+    if @current_user.update(user_params)
+      render json: { message: 'User updated', data: @current_user}
+    else
+      render json: { errors: @current_user.errors.full_messages }
+    end
+  end
+
+  def destroy
+    if @current_user.destroy
+      render json: { message: 'User deleted' }
+    else
+      render json: { errors: @current_user.errors.full_messages }
+    end
+  end
+  
 
   def login
     user = User.find_by_email(params[:email])
@@ -16,6 +41,11 @@ class UsersController < ApplicationController
     else
       render json: { error: "Please Check your Email And Password....."}  
     end
+  end
+
+  private
+  def user_params
+    params.permit(:name, :email, :age, :mobile, :password, :type)
   end
   end
   

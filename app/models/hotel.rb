@@ -5,8 +5,7 @@ class Hotel < ApplicationRecord
 
   has_many :rooms, dependent: :destroy
   
-  validates :name, presence: true 
-  validates :address, :contact, presence: true
+  validates :name, :address, :contact, presence: true
   validates :status ,presence:true, inclusion: { in: %w(open closed) } 
   validate :owner_only_add_hotel
 
