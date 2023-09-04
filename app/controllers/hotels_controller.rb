@@ -37,7 +37,7 @@ class HotelsController < ApplicationController
 		hotels = Hotel.joins(:location).where('locations.name like ?', "%#{name}%")
 		render json: hotels
   	end
-
+	
 	def search_hotel_by_name
 		name = params[:name]
 		if name.blank?

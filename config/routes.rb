@@ -1,13 +1,12 @@
 Rails.application.routes.draw do
   resources :locations
   resources :customers
-  resources :owners
   resources :bookings
-  resource :users 
+  resource :users
   post 'user/login', to: 'users#login'
-  patch 'users', to: 'users#update'
-  put  'users', to: 'users#update'
-  delete 'users', to: 'users#destroy'
+  # patch 'users', to: 'users#update'
+  # put 'users', to: 'users#update'
+  # delete 'users', to: 'users#destroy'
 
    
 
